@@ -89,7 +89,7 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         user_id = request.user.id
         novel_id = request.GET.get('novel_id', '')
         read_id = request.GET.get('read_id', '')
-        if read_id == 'undefined':
+        if read_id == 'undefined' or read_id == '0':
             chapter = self.queryset.filter(novel_id=novel_id).first()
         else:
             chapter = self.queryset.get(id=read_id)
