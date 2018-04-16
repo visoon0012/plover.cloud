@@ -12,7 +12,7 @@ def processing(channel):
     :param channel:  nn-国内高匿/nt-国内普通/wn-国内https/wt-国内http
     :return:
     """
-    if len(settings.CACHE['proxies']['items']) == 0 or int(time.time()) > settings.CACHE['proxies']['update'] + 3600:
+    if len(settings.CACHE['proxies']['items']) == 0 or int(time.time()) > settings.CACHE['proxies']['update'] + 60:
         items = []
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'

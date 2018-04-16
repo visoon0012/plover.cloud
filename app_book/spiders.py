@@ -50,7 +50,7 @@ def auto_update_fork():
     # 更新目录
     for item in novel_forks:
         now_time = datetime.datetime.now()
-        if (now_time - item['novel__updated_time']).seconds > 60 :  # 大于6个小时更新一次
+        if (now_time - item['novel__updated_time']).seconds > 60 * 60 * 6 :  # 大于6个小时更新一次
             _novel, chapters = search_novel(item['novel__title'])
             for chapter in chapters:
                 try:
