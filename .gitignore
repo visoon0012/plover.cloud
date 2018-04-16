@@ -46,3 +46,4 @@ libs/spider/poem_spider/__pycache__/
 libs/spider/proxies/__pycache__/
 libs/util/__pycache__/
 /config/datebases.py
+media/movie_images
