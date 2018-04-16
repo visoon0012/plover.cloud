@@ -16,7 +16,7 @@ import os
 import sys
 from datetime import timedelta
 
-from config import datebases
+from config import databases
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
