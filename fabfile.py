@@ -4,15 +4,14 @@ from fabric.api import *
 Plover自动化运维脚本
 """
 
-env.user = 'root'
-env.password = 'Chenshun1991'
-env.hosts = ['101.200.36.42']  # 如果有多个主机，fabric会自动依次部署
+env.user = 'root'   # 服务器用户名
+env.password = ''  # 服务器密码
+env.hosts = ['']  # 如果有多个主机，fabric会自动依次部署
 #
 env.command_timeout = 10  # 10秒超时
 env.current_ip = 0  # 当前执行到的ip
 
 """
-fab -f fabfile.py -H '140.82.36.100' -p 'q,Q1%ySN6)f#cr7-'
 常用命令
  
 lcd(dir): 进入本机某目录
@@ -27,7 +26,7 @@ fab update
 
 def update():
     with settings(warn_only=True):
-        with cd('/root/plover.cloud'):
+        with cd('/root/apps/plover.cloud'):
             run('pkill -9 uwsgi')
             run('pwd')
             run('git pull')

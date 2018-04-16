@@ -53,28 +53,29 @@
 
 
 ##  开发时常用指令
-######1.  更新数据表 并 生成数据库
-    python manage.py makemigrations & python manage.py migrate
-######2.
-    python manage.py migrate
-######3.  创建管理员
-    python manage.py createsuperuser
-######4.  启动
-    python manage.py runserver
-######5.  新建app：
-    python manage.py startapp app_app
-######5.  移除app：
-    python manage.py migrate your_app_name zero
-######6.  生成 requirements.txt
-    pip freeze >requirements.txt
-######7.  使用 requirements.txt
-    pip install -r requirements.txt
-######8.  本地开发环境激活（Visoon）
-    D:\workspace\python\python_ve\plover.cloud.ve\Scripts\activate.bat
-    
-######9. 收集静态数据
-    python manage.py collectstatic
-    
+
+    ######1.  更新数据表 并 生成数据库
+        python manage.py makemigrations & python manage.py migrate
+    ######2.
+        python manage.py migrate
+    ######3.  创建管理员
+        python manage.py createsuperuser
+    ######4.  启动
+        python manage.py runserver
+    ######5.  新建app：
+        python manage.py startapp app_app
+    ######5.  移除app：
+        python manage.py migrate your_app_name zero
+    ######6.  生成 requirements.txt
+        pip freeze >requirements.txt
+    ######7.  使用 requirements.txt
+        pip install -r requirements.txt
+    ######8.  本地开发环境激活（Visoon）
+        D:\workspace\python\python_ve\plover.cloud.ve\Scripts\activate.bat
+
+    ######9. 收集静态数据
+        python manage.py collectstatic
+
     
 ######10. 重启影梭
     #!/bin/sh
