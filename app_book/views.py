@@ -88,8 +88,8 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
             return Response({'token': '请先登录'}, status=status.HTTP_401_UNAUTHORIZED)
         user_id = request.user.id
         novel_id = request.GET.get('novel_id', '')
-        read_id = int(request.GET.get('read_id', '0'))
-        if read_id == 0:
+        read_id = request.GET.get('read_id', '')
+        if read_id == 'undefined':
             chapter = self.queryset.filter(novel_id=novel_id).first()
         else:
             chapter = self.queryset.get(id=read_id)
