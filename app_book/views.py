@@ -78,14 +78,12 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         """
         小说的所有章节
         """
-        print('1111')
         novel_id = kwargs['pk']
         novel_chapters = NovelChapter.objects.filter(novel_id=novel_id)
         return Response(NovelChapterSerializer(novel_chapters, many=True).data)
 
     @list_route()
     def read(self, request):
-        print('1111')
         if request.user.is_anonymous:
             return Response({'token': '请先登录'}, status=status.HTTP_401_UNAUTHORIZED)
         user_id = request.user.id
