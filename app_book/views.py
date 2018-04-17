@@ -78,6 +78,7 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         """
         小说的所有章节
         """
+        print('1111')
         novel_id = kwargs['pk']
         novel_chapters = NovelChapter.objects.filter(novel_id=novel_id)
         return Response(NovelChapterSerializer(novel_chapters, many=True).data)
