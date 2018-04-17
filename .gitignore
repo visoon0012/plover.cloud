@@ -6,3 +6,5 @@ local_settings.py
 migrations/
 /config/datebases.py
 media/movie_images
+fabfile.py
+config/databases.py
