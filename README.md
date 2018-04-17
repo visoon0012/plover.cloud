@@ -104,6 +104,10 @@
 ###### mysql
     备份数据：mysqldump -u root -p plover_cloud > plover_cloud_20171109.sql
 
-###### mysql
+###### whl
 
     自用的whl，有些在windows下面很难找
+
+###### shell
+
+    自动部署BBR脚本
