@@ -102,6 +102,8 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
                 chapter = NovelChapter.objects.filter(novel_id=novel_id).filter(id__lt=read_id).last()
             else:
                 chapter = NovelChapter.objects.get(id=read_id)
+        if not chapter:
+            return Response({'error': '没有对应的章节'}, status.HTTP_400_BAD_REQUEST)
         if len(chapter.content) == 0:
             chapter.content = spiders.search_novel_chapter(chapter.link)
             chapter.save()

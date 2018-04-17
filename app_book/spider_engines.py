@@ -1,6 +1,10 @@
+import random
+
 import requests
 from bs4 import BeautifulSoup
 from pypinyin import lazy_pinyin
+
+from libs.spider.proxies import xicidaili
 
 
 def search_novel(engine, proxy, title):
@@ -12,7 +16,7 @@ def search_novel(engine, proxy, title):
 
 def search_chapter(engine, proxy, url):
     engines = [
-        search_chapter_detail_xxshu5(proxy, url)
+        search_chapter_detail(proxy, url)
     ]
     return engines[engine]
 
@@ -59,7 +63,7 @@ def search_novel_xxshu5(proxy, title):
     return novel, novel_chapters
 
 
-def search_chapter_detail_xxshu5(proxy, url):
+def search_chapter_detail(proxy, url):
     """
     获取小说章节正文
     :param proxy:
@@ -67,6 +71,19 @@ def search_chapter_detail_xxshu5(proxy, url):
     :return:
     """
     r = requests.get(url, proxies=proxy)
+    r.encoding = 'gbk'
     soup = BeautifulSoup(r.text, "html.parser")
-    content = soup.find(id='content')
+    # 搜索正文
+    content = soup.find(id='content') or soup.find(id='BookText')
     return content.text
+
+
+if __name__ == '__main__':
+    # 1.获取代理
+    proxies = xicidaili.processing('nn')
+    tmp = random.sample(proxies, 1)[0]
+    proxy = {
+        "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
+    }
+    url = 'http://www.soduso.com/go_113230745.aspx?t=0B5B054DB3D537F4795A508493DBBD72067962A807110C03A71ED4434B7CD1293AF1565A4C8C4EA197267DC9CED4835D602831372553A1EC'
+    print(search_chapter_detail(proxy, url))
