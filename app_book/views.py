@@ -91,6 +91,8 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         read_id = request.GET.get('read_id', '')
         next_chapter = request.GET.get('next', 'false')
         last_chapter = request.GET.get('last', 'false')
+        print(next_chapter)
+        print(type(next_chapter))
         if read_id == 'undefined' or read_id == '0':
             chapter = NovelChapter.objects.filter(novel_id=novel_id).first()
         else:
@@ -107,10 +109,7 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         novel_fork = NovelFork.objects.get(user_id=user_id, novel_id=novel_id)
         novel_fork.read = chapter
         novel_fork.save()
-        data = NovelChapterSerializer(chapter).data
-        data['next_chapter'] = next_chapter
-        data['next_chapter'] = type(next_chapter)
-        return Response(data)
+        return Response(NovelChapterSerializer(chapter).data)
 
     @detail_route()
     def cache(self, request, *args, **kwargs):
