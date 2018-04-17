@@ -84,6 +84,7 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
 
     @list_route()
     def read(self, request):
+        print('1111')
         if request.user.is_anonymous:
             return Response({'token': '请先登录'}, status=status.HTTP_401_UNAUTHORIZED)
         user_id = request.user.id
