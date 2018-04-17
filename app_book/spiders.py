@@ -1,5 +1,6 @@
 import datetime
 import random
+from time import sleep
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
@@ -50,7 +51,7 @@ def auto_update_fork():
     # 更新目录
     for item in novel_forks:
         now_time = datetime.datetime.now()
-        if (now_time - item['novel__updated_time']).seconds > 60 * 60 * 6 :  # 大于6个小时更新一次
+        if (now_time - item['novel__updated_time']).seconds > 60 * 60 * 6:  # 大于6个小时更新一次
             _novel, chapters = search_novel(item['novel__title'])
             for chapter in chapters:
                 try:
@@ -60,6 +61,26 @@ def auto_update_fork():
                     novel_chapters.save()
             novel = Novel.objects.get(id=item['novel__id'])
             novel.save()
+
+
+def auto_download():
+    """
+    自动下载小说章节正文
+    :return:
+    """
+    novel_chapters = NovelChapter.objects.filter(content='')
+    count = 0
+    for novel_chapter in novel_chapters:
+        try:
+            sleep(3)
+            count += 1
+            content = search_novel_chapter(novel_chapter['link'])
+            novel_chapter.content = content
+            novel_chapter.save()
+        except Exception as e:
+            print(e)
+    print('下载完毕，新增: %s' % count)
+    return count
 
 
 if __name__ == '__main__':

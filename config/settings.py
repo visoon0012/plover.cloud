@@ -88,7 +88,9 @@ CORS_ORIGIN_WHITELIST = (
 CRONJOBS = [
     ('0 1 * * *', 'app_spider.utils.get_resource_urls', '>>/root/plover.cloud/logs/spider_resource.log'),
     ('0 2 * * *', 'app_spider.utils.get_resources', '>>/root/plover.cloud/logs/spider_resource.log'),
-    ('0 3 * * *', 'app_movie.utils.auto_get_movie_simple', '>>/root/plover.cloud/logs/spider_movie.log')
+    ('0 3 * * *', 'app_movie.utils.auto_get_movie_simple', '>>/root/plover.cloud/logs/spider_movie.log'),
+    ('0 */4 * * *', 'app_book.spiders.auto_update_fork', '>>/root/plover.cloud/logs/auto_update_fork.log'),
+    ('0 4 * * *', 'app_book.spiders.auto_download', '>>/root/plover.cloud/logs/auto_download.log'),
 ]
 # END 定时任务
 

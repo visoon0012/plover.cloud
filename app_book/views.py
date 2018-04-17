@@ -155,6 +155,11 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
                 print(e)
         return Response({'success': '下载完毕，新增: %s' % count})
 
+    @list_route()
+    def auto_download(self):
+        count = spiders.auto_download()
+        return Response({'success': '下载完毕，新增: %s' % count})
+
 
 class NovelForkViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = (IsOwnerOrReadOnly,)
