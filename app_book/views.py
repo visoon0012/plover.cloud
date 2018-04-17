@@ -91,17 +91,12 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
         read_id = request.GET.get('read_id', '')
         next_chapter = request.GET.get('next', 'false')
         last_chapter = request.GET.get('last', 'false')
-        print(next_chapter)
-        print(type(next_chapter))
-        print(last_chapter)
         if read_id == 'undefined' or read_id == '0':
             chapter = NovelChapter.objects.filter(novel_id=novel_id).first()
         else:
             if next_chapter == 'true':
-                print('下一章')
                 chapter = NovelChapter.objects.filter(novel_id=novel_id).filter(id__gt=read_id).first()
             elif last_chapter == 'true':
-                print('上一章')
                 chapter = NovelChapter.objects.filter(novel_id=novel_id).filter(id__lt=read_id).last()
             else:
                 chapter = NovelChapter.objects.get(id=read_id)
