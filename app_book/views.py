@@ -95,8 +95,10 @@ class NovelChapterViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, view
             chapter = NovelChapter.objects.filter(novel_id=novel_id).first()
         else:
             if next_chapter == 'true':
+                print('下一章')
                 chapter = NovelChapter.objects.filter(novel_id=novel_id).filter(id__gt=read_id).first()
             elif last_chapter == 'true':
+                print('上一章')
                 chapter = NovelChapter.objects.filter(novel_id=novel_id).filter(id__lt=read_id).last()
             else:
                 chapter = NovelChapter.objects.get(id=read_id)
