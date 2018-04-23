@@ -71,7 +71,7 @@ def search_chapter_detail(proxy, url):
     :return:
     """
     r = requests.get(url, proxies=proxy)
-    r.encoding = 'gbk'
+    r.encoding = r.apparent_encoding
     soup = BeautifulSoup(r.text, "html.parser")
     # 搜索正文
     content = soup.find(id='content') or soup.find(id='BookText')
@@ -85,5 +85,5 @@ if __name__ == '__main__':
     proxy = {
         "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
     }
-    url = 'http://www.soduso.com/go_113230745.aspx?t=0B5B054DB3D537F4795A508493DBBD72067962A807110C03A71ED4434B7CD1293AF1565A4C8C4EA197267DC9CED4835D602831372553A1EC'
+    url = 'http://www.xxshu5.com/shenhuabansanguo/1330424/'
     print(search_chapter_detail(proxy, url))
