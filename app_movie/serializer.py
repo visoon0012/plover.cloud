@@ -19,7 +19,8 @@ class DoubanMovieSimpleSerializer(serializers.ModelSerializer):
             keywords = re.split("[ !！?？.。：:()（）]", obj.title)
             movie_resources = MovieResource.objects
             for keyword in keywords:
-                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+                # 限制返回结果数，太多会卡
+                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))[0:20]
             serializer = MovieResourceSerializer(movie_resources, many=True)
             return serializer.data
         else:
