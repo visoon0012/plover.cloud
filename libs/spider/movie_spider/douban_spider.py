@@ -1,11 +1,19 @@
 import json
+import random
 
 import requests
+
+from libs.spider.proxies import xicidaili
 
 
 def get_soup(url):
     try:
-        response = requests.get(url)
+        proxies = xicidaili.processing('nn')
+        tmp = random.sample(proxies, 1)[0]
+        proxy = {
+            "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
+        }
+        response = requests.get(url, proxies=proxy)
         return response.text
     except Exception as e:
         print(e)
