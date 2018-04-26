@@ -20,7 +20,7 @@ class DoubanMovieSimpleSerializer(serializers.ModelSerializer):
             movie_resources = MovieResource.objects
             for keyword in keywords:
                 # 限制返回结果数，太多会卡
-                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))[0:20]
+                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
             serializer = MovieResourceSerializer(movie_resources, many=True)
             return serializer.data
         else:
