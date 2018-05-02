@@ -15,8 +15,8 @@ def handle_message(msg):
     print(msg)
     print(type(msg))
     print(type(msg.type))
-    print(msg.FromUserName)
-    print(msg['FromUserName'])
+    print(msg.OrderedDict())
+    print(msg.OrderedDict()['FromUserName'])
     # 存储
     with User.objects.get(wechat_openid=msg['FromUserName']) as from_user:
         from_user.message = msg['Content']
