@@ -23,6 +23,7 @@ from app_message.views import SystemMessageViewset
 from app_movie.views import MovieSimpleViewset, MovieResourceViewset, MovieViewset, UserMovieSimpleMarkViewset
 from app_system.views import UserSSConfigViewset
 from app_user.views import UserViewset
+from app_wechat.views import wechat
 from config.settings import STATIC_ROOT, MEDIA_ROOT
 
 from rest_framework import routers
@@ -59,6 +60,7 @@ urlpatterns = [
     url(r'^api/token/verify/', verify_jwt_token),
     # DOCS
     url(r'^docs/', SwaggerSchemaView.as_view(), name="docs"),
+    url(r'^wechat/', wechat, name='wechat'),
     #     url(r'^', include('app_web.urls')),
     #     url(r'^user/', include('app_user.urls')),
     #     url(r'^blog/', include('app_blog.urls')),

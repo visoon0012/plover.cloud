@@ -71,8 +71,7 @@
     ######7.  使用 requirements.txt
         pip install -r requirements.txt
     ######8.  本地开发环境激活（Visoon）
-        D:\workspace\python\python_ve\plover.cloud.ve\Scripts\activate.bat
-
+        activate plover
     ######9. 收集静态数据
         python manage.py collectstatic
 
