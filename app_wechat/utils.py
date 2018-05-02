@@ -3,7 +3,7 @@ from wechatpy import create_reply
 from wechatpy.messages import TextMessage
 
 from app_user.models import User
-from app_wechat.models import WechatRequest
+from app_wechat.models import WechatRequest, UserWechatRequest
 
 
 def handle_message(msg):
@@ -12,11 +12,15 @@ def handle_message(msg):
     :param msg:
     :return:
     """
-    # 获取消息内容
+    # 获取用户
+    try:
+        from_user = User.objects.get(wechat_openid=msg.source)
+    except ObjectDoesNotExist as e:
+        print('此用户没有绑定')
+        # 创建一个临时用户给这个人
+        from_user = User.objects.create(username='WX{}'.format(msg.source), wechat_openid=msg.source)
     # 存储
-    with User.objects.get(wechat_openid=msg.source) as from_user:
-        from_user.message = msg.content
-        from_user.save()
+    UserWechatRequest.objects.create(user=from_user, message=msg.content)
     # 分析
     try:
         wechat_req = WechatRequest.objects.get(message=msg.content)
