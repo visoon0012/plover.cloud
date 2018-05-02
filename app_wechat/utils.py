@@ -13,6 +13,10 @@ def handle_message(msg):
     """
     # 获取消息内容
     print(msg)
+    print(type(msg))
+    print(type(msg.type))
+    print(msg.FromUserName)
+    print(msg['FromUserName'])
     # 存储
     with User.objects.get(wechat_openid=msg['FromUserName']) as from_user:
         from_user.message = msg['Content']
