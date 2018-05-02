@@ -1,10 +1,13 @@
 import json
+import re
 from time import sleep
 
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 
-from app_movie.models import DoubanMovieSimple
+from app_movie.models import DoubanMovieSimple, MovieResource
+from app_movie.serializer import MovieResourceSerializer
 from libs.spider.movie_spider import douban_spider
 
 
@@ -50,3 +53,11 @@ def auto_get_movie_simple():
     get_movie_simple('tv', '美剧')
     get_movie_simple('tv', '日剧')
     get_movie_simple('tv', '韩剧')
+
+
+def search_resources(keyword):
+    keywords = re.split("[ !！?？.。：:()（）]", keyword)
+    movie_resources = MovieResource.objects
+    for keyword in keywords:
+        movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+    return MovieResourceSerializer(movie_resources, many=True).data
