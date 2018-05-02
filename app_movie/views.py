@@ -1,16 +1,14 @@
 import json
 import re
 from io import BytesIO
-import pandas as pd
 
 import requests
 from PIL import Image
-from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, mixins, status
-from rest_framework.decorators import list_route, action
+from rest_framework.decorators import list_route
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
@@ -18,7 +16,6 @@ from rest_framework_jwt import authentication
 from app_movie import utils
 from app_movie.models import DoubanMovieSimple, DoubanMovie, MovieResource, MovieImage, UserMovieSimpleMark
 from app_movie.serializer import DoubanMovieSimpleSerializer, DoubanMovieSerializer, MovieResourceSerializer, UserMovieSimpleMarkSerializer
-from app_user.serializer import UserSerializer
 from libs.permissions import IsReadOnlyOrAdmin, IsOwnerOrReadOnly
 from libs.spider.movie_spider import douban_spider
 
@@ -139,20 +136,20 @@ class MovieResourceViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, vie
             result.append(tmp_list)
         return Response(result)
 
-    @action(detail=False)
-    def search2(self, request):
-        keywords = request.GET.get('keywords', '')
-        if keywords == '':
-            return Response({'message': '请输入关键字'}, 400)
-        # 查询是否有该标题的下载资源
-        keywords = re.split("[ !！?？.。：:()（）]", keywords)
-        movie_resources = MovieResource.objects
-        for keyword in keywords:
-            movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
-        df = pd.DataFrame(list(movie_resources.values()))
-        df = df.fillna('unknow')
-        result = df.groupby('source').apply(lambda g: g.to_dict('records')).to_dict()
-        return Response(result)
+    # @action(detail=False)
+    # def search2(self, request):
+    #     keywords = request.GET.get('keywords', '')
+    #     if keywords == '':
+    #         return Response({'message': '请输入关键字'}, 400)
+    #     # 查询是否有该标题的下载资源
+    #     keywords = re.split("[ !！?？.。：:()（）]", keywords)
+    #     movie_resources = MovieResource.objects
+    #     for keyword in keywords:
+    #         movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+    #     df = pd.DataFrame(list(movie_resources.values()))
+    #     df = df.fillna('unknow')
+    #     result = df.groupby('source').apply(lambda g: g.to_dict('records')).to_dict()
+    #     return Response(result)
 
 
 class UserMovieSimpleMarkViewset(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
