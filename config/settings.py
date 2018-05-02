@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'app_poem',
     'app_blog',
     'app_system',
+    'app_wechat',
 ]
 
 REST_FRAMEWORK = {
