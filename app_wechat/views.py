@@ -9,6 +9,7 @@ WECHAT_TOKEN = 'plovercloud'
 
 @csrf_exempt
 def wechat(request):
+    print('进入微信处理')
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -21,6 +22,7 @@ def wechat(request):
         response = HttpResponse(echo_str, content_type="text/plain")
         return response
     elif request.method == 'POST':
+        print('文字处理')
         msg = parse_message(request.body)
         if msg.type == 'text':
             reply = create_reply('这是条文字消息', msg)
