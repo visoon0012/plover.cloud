@@ -4,12 +4,13 @@ from wechatpy import parse_message, create_reply
 from wechatpy.exceptions import InvalidSignatureException
 from wechatpy.utils import check_signature
 
+from app_wechat.utils import handle_message
+
 WECHAT_TOKEN = 'plovercloud'
 
 
 @csrf_exempt
 def wechat(request):
-    print('进入微信处理')
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -22,14 +23,13 @@ def wechat(request):
         response = HttpResponse(echo_str, content_type="text/plain")
         return response
     elif request.method == 'POST':
-        print('文字处理')
         msg = parse_message(request.body)
         if msg.type == 'text':
-            reply = create_reply('这是条文字消息', msg)
+            reply = handle_message(msg)
         elif msg.type == 'image':
-            reply = create_reply('这是条图片消息', msg)
+            reply = create_reply('这是条图片消息，暂时还不能处理该类型消息', msg)
         elif msg.type == 'voice':
-            reply = create_reply('这是条语音消息', msg)
+            reply = create_reply('这是条语音消息，暂时还不能处理该类型消息', msg)
         else:
             reply = create_reply('这是条其他类型消息', msg)
         response = HttpResponse(reply.render(), content_type="application/xml")
