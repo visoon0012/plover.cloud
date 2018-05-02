@@ -26,9 +26,8 @@ def handle_message(msg):
         wechat_req = WechatRequest.objects.get(message=msg.content)
         return create_reply(wechat_req.response.message, msg)
     except ObjectDoesNotExist as e:
-        defualt = """
-        请访问下面链接获得更高级功能：\n
-        http://www.plover.cloud/wechat.html?openid={}\n
+        defualt = """请访问下面链接获得更高级功能：
+        http://www.plover.cloud/wechat.html?openid={}
         这是您的专属链接，请不要告诉他人。
         """
         return create_reply(defualt.format(msg.source), msg)
