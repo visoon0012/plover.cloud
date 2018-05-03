@@ -23,9 +23,9 @@ def handle_message(msg):
     # 存储
     if hasattr(msg, 'content'):
         UserWechatRequest.objects.create(user=from_user, message=msg.content)
-    # 分析
-    if str(msg.content)[0:2] in ['搜索', ]:
-        return handle_cmd(msg)
+        # 分析
+        if str(msg.content)[0:2] in ['搜索', ]:
+            return handle_cmd(msg)
     else:
         try:
             wechat_req = WechatRequest.objects.get(message=msg.content)
