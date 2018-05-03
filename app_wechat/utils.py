@@ -16,10 +16,13 @@ def handle_message(msg):
     try:
         from_user = User.objects.get(wechat_openid=msg.source)
     except ObjectDoesNotExist as e:
-        # 创建一个临时用户给这个人
+        # 创建一个临时用户
         from_user = User.objects.create(username='WX{}'.format(msg.source), wechat_openid=msg.source)
+        from_user.set_password(msg.source)
+        from_user.save()
     # 存储
-    UserWechatRequest.objects.create(user=from_user, message=msg.content)
+    if hasattr(msg, 'content'):
+        UserWechatRequest.objects.create(user=from_user, message=msg.content)
     # 分析
     if str(msg.content)[0:2] in ['搜索', ]:
         return handle_cmd(msg)
