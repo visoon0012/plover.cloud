@@ -32,8 +32,8 @@ def wechat(request):
             reply = create_reply('这是条语音消息，暂时还不能处理该类型消息', msg)
         else:
             # 关注的时候
-            reply = handle_message(msg)
-            # reply = create_reply('这是条其他类型消息', msg)
+            default = """请访问下面链接获得更高级功能：\nhttp://www.plover.cloud/wechat.html?openid={}\n这是您的专属链接，请不要告诉他人。\n如需帮助请输入：帮助。"""
+            reply = create_reply(default.format(msg.source), msg)
         response = HttpResponse(reply.render(), content_type="application/xml")
         return response
     else:
