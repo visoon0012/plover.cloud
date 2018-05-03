@@ -43,7 +43,7 @@ def handle_cmd(msg):
         if cmds[0] == '搜索':
             if cmds[1] == '电影':
                 result = search_resources(cmds[2])
-                return create_reply(result, msg)
+                return create_reply('有{}条相关资源，请于链接中查询'.format(len(result)), msg)
         else:
             pass
     else:
