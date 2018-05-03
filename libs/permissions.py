@@ -19,7 +19,12 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             '''
             return True
         # 返回是否有权限，这里我们直接通过对比拥有者是否是请求者作为返回
-        return obj.user_id == request.user.id
+        if hasattr(obj, 'user_id'):
+            return obj.user_id == request.user.id
+        elif hasattr(obj, 'id'):
+            return obj.id == request.user.id
+        else:
+            return False
 
 
 class UserMessagePermission(permissions.BasePermission):
