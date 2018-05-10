@@ -18,10 +18,7 @@ def search_novel(title):
     """
     # 1.获取代理
     proxies = xicidaili.processing('nn')
-    tmp = random.sample(proxies, 1)[0]
-    proxy = {
-        "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
-    }
+    proxy = random.choice(proxies)
     # 获取数据
     novel, novel_chapters = spider_engines.search_novel(0, proxy, title)
     return novel, novel_chapters
@@ -35,10 +32,7 @@ def search_novel_chapter(url):
     """
     # 1.获取代理
     proxies = xicidaili.processing('nn')
-    tmp = random.sample(proxies, 1)[0]
-    proxy = {
-        "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
-    }
+    proxy = random.choice(proxies)
     return spider_engines.search_chapter(0, proxy, url)
 
 

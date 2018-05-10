@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
 from wechatpy import parse_message, create_reply
 from wechatpy.exceptions import InvalidSignatureException
 from wechatpy.utils import check_signature

@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, mixins, status
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, action
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
@@ -28,6 +28,15 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', 'douban_id', 'title', 'douban_tag', 'douban_type',)
     search_fields = ('title',)
+
+    @action(methods=['GET'], detail=False)
+    def status(self, request):
+        return Response({'status': False})
+
+    @action(methods=['GET'], detail=False)
+    def auto(self, request):
+        utils.auto_get_movie_detail()
+        return Response({'message': 'ok'})
 
     @list_route()
     def spider(self, request):
@@ -76,8 +85,8 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = DoubanMovie.objects.get_queryset().order_by('id')
     serializer_class = DoubanMovieSerializer
 
-    @list_route()
-    def detail(self, request):
+    @action(detail=False, methods=['GET'], url_name='detail', url_path='detail')
+    def movie_detail(self, request):
         """
         description: 根据豆瓣id获取影片信息，如果数据库没有则去豆瓣搜索
         parameters:
@@ -88,10 +97,12 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             description: douban_id
         """
         douban_id = request.GET.get('douban_id', '')
+        print(douban_id)
         try:
             # 数据库存在该id记录
             douban_movie = DoubanMovie.objects.get(douban_id=douban_id)
             result = json.loads(douban_movie.json_data)
+            print(result)
             # 更新字段的显示次数
             douban_movie.show_times += 1
             douban_movie.save()
@@ -102,6 +113,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             DoubanMovie.objects.create(douban_id=douban_id, json_data=result).save()
             # 返回结果
             result = json.loads(result)
+        print(result)
         return Response(result)
 
 
