@@ -26,7 +26,7 @@ def search_list(_type, tag, movie_type, page):
 
 
 def search_detail(movie_id):
-    url = 'http://api.douban.com/v2/movie/subject/%s' % str(movie_id)
+    url = 'http://douban.uieee.com/v2/movie/subject/%s' % str(movie_id)
     response = requests.get(url)
     return response.text
 

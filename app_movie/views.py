@@ -97,23 +97,21 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             description: douban_id
         """
         douban_id = request.GET.get('douban_id', '')
-        print(douban_id)
         try:
             # 数据库存在该id记录
             douban_movie = DoubanMovie.objects.get(douban_id=douban_id)
             result = json.loads(douban_movie.json_data)
-            print(result)
             # 更新字段的显示次数
             douban_movie.show_times += 1
             douban_movie.save()
         except ObjectDoesNotExist as e:
+            print('新豆瓣影片信息')
             # 不存在该资源，到豆瓣查询
             result = douban_spider.search_detail(douban_id)
             # 保存到数据库
             DoubanMovie.objects.create(douban_id=douban_id, json_data=result).save()
             # 返回结果
             result = json.loads(result)
-        print(result)
         return Response(result)
 
 
