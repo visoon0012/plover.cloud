@@ -10,11 +10,9 @@ def get_soup(url):
     try:
         proxies = xicidaili.processing2('nn', page=1)
         proxy = random.choice(proxies)
-        print('使用代理：{}'.format(str(proxy)))
         response = requests.get(url, proxies=proxy, timeout=5)
         return response.text
     except Exception as e:
-        print(e)
         return None
 
 

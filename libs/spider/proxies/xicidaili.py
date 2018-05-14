@@ -89,7 +89,6 @@ def processing2(channel, page=1):
         count = 0
         for item in items:
             count += 1
-            print('{}/{}'.format(count, len(items)))
             proxies = {
                 "http": "http://%s:%s" % (item['ip'], item['port']),
                 "https": "https://%s:%s" % (item['ip'], item['port']),
@@ -97,7 +96,6 @@ def processing2(channel, page=1):
             try:
                 r2 = requests.get("http://api.douban.com/v2/movie/subject/27021220", headers=headers, proxies=proxies, timeout=3)
                 r2.encoding = r2.apparent_encoding
-                print(r2.text)
                 if 'avatars' in r2.text and 'rating' in r2.text:
                     print('新增代理')
                     result.append(proxies)
