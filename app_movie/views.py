@@ -31,7 +31,7 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
 
     @action(methods=['GET'], detail=False)
     def status(self, request):
-        return Response({'status': True, 'status_2': True})
+        return Response({'status': True})
 
     @action(methods=['GET'], detail=False)
     def auto(self, request):
