@@ -1,5 +1,7 @@
+import datetime
 import json
 import re
+import time
 from io import BytesIO
 
 import requests
@@ -31,14 +33,14 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
 
     @action(methods=['GET'], detail=False)
     def status(self, request):
-        return Response({'status': True, 'status2': False})
+        return Response({'status': True, 'status2': True})
 
     @action(methods=['GET'], detail=False)
     def auto(self, request):
         utils.auto_get_movie_detail()
         return Response({'message': 'ok'})
 
-    @list_route()
+    @action(methods=['GET'], detail=False)
     def spider(self, request):
         """
         description: 电影简介爬虫 - 从豆瓣电影取数据
@@ -58,7 +60,7 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
         m_tag = request.GET.get('tag', '热门')
         return utils.get_movie_simple(m_type, m_tag)
 
-    @list_route(methods=['post'])
+    @action(methods=['POST'], detail=False)
     def image(self, request):
         url = request.data['url']
         movie_image, created = MovieImage.objects.get_or_create(source=url)
@@ -100,8 +102,14 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
         try:
             # 数据库存在该id记录
             douban_movie = DoubanMovie.objects.get(douban_id=douban_id)
-            result = json.loads(douban_movie.json_data)
+            # 如果信息太旧了，同步最新的信息回来
+            if douban_movie.updated_time < time.timezone.now() - datetime.timedelta(days=30):
+                print('影片信息过旧')
+                result = douban_spider.search_detail(douban_id)
+                douban_movie.json_data = result
+                douban_movie.save()
             # 更新字段的显示次数
+            result = json.loads(douban_movie.json_data)
             douban_movie.show_times += 1
             douban_movie.save()
         except ObjectDoesNotExist as e:

@@ -94,19 +94,18 @@ def processing2(channel, page=1):
                 "https": "https://%s:%s" % (item['ip'], item['port']),
             }
             try:
-                r2 = requests.get("http://api.douban.com/v2/movie/subject/27021220", headers=headers, proxies=proxies, timeout=3)
+                r2 = requests.get("https://api.douban.com/v2/movie/subject/27021220", headers=headers, proxies=proxies, timeout=3)
                 r2.encoding = r2.apparent_encoding
                 if 'avatars' in r2.text and 'rating' in r2.text:
                     print('新增代理')
                     result.append(proxies)
             except Exception as e:
-                print(e)
+                pass
         print('可用的代理数量：{}'.format(len(result)))
         settings.CACHE['proxies']['items'] = result
         settings.CACHE['proxies']['update'] = int(time.time())
         return result
     else:
-        print('使用缓存的代理')
         return settings.CACHE['proxies']['items']
 
 

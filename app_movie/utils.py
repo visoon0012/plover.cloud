@@ -71,6 +71,7 @@ def auto_get_movie_detail():
         if douban_id not in douban_id_detail_list:
             # 不存在该资源，到豆瓣查询
             result = douban_spider.search_detail_proxy(douban_id['douban_id'])
+            print(result)
             if result is not None and 'avatars' in result and 'rating' in result:
                 count += 1
                 # 保存到数据库

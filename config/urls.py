@@ -19,7 +19,7 @@ from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from app_book.views import NovelViewset, NovelChapterViewset, NovelForkViewset
-from app_message.views import SystemMessageViewset
+from app_message.views import SystemMessageViewset, UserMessageViewset
 from app_movie.views import MovieSimpleViewset, MovieResourceViewset, MovieViewset, UserMovieSimpleMarkViewset
 from app_system.views import UserSSConfigViewset
 from app_user.views import UserViewset
@@ -45,6 +45,7 @@ router.register(r'movie_resource', MovieResourceViewset)
 router.register(r'movie', MovieViewset)
 #
 router.register(r'system_message', SystemMessageViewset)
+router.register(r'user_message', UserMessageViewset)
 #
 router.register(r'user', UserViewset)
 #

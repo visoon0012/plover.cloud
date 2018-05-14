@@ -30,7 +30,7 @@ def search_detail(movie_id):
 
 
 def search_detail_proxy(movie_id):
-    url = 'http://api.douban.com/v2/movie/subject/%s' % str(movie_id)
+    url = 'https://api.douban.com/v2/movie/subject/%s' % str(movie_id)
     return get_soup(url)
 
 
