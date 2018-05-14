@@ -1,7 +1,7 @@
 import datetime
 import json
 import re
-import time
+from django.utils import timezone
 from io import BytesIO
 
 import requests
@@ -103,7 +103,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             # 数据库存在该id记录
             douban_movie = DoubanMovie.objects.get(douban_id=douban_id)
             # 如果信息太旧了，同步最新的信息回来
-            if douban_movie.updated_time < time.timezone.now() - datetime.timedelta(days=30):
+            if douban_movie.updated_time < timezone.now() - datetime.timedelta(days=30):
                 print('影片信息过旧')
                 result = douban_spider.search_detail(douban_id)
                 douban_movie.json_data = result
