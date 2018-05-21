@@ -16,7 +16,11 @@ class UserMovieSimpleMarkAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'movie_simple', 'is_fork', 'is_watched', 'is_like', 'comment', 'created_time', 'updated_time')
 
 
+class DoubanMovieSimpleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'douban_id', 'title', 'created_time', 'updated_time')
+
+
 admin.site.register(MovieResource, MovieResourceAdmin)
 admin.site.register(DoubanMovie, DoubanMovieAdmin)
-admin.site.register(DoubanMovieSimple)
+admin.site.register(DoubanMovieSimple, DoubanMovieSimpleAdmin)
 admin.site.register(UserMovieSimpleMark, UserMovieSimpleMarkAdmin)
