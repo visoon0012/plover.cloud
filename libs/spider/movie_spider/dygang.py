@@ -7,9 +7,9 @@ from bs4 import BeautifulSoup
 HOST = "http://www.dygang.com"
 
 
-def processing_index(proxy):
+def processing_index():
     result = []
-    r = requests.get(HOST, proxies=proxy)
+    r = requests.get(HOST)
     r.encoding = 'gb2312'
     selector = etree.HTML(r.text)
     a_list = selector.xpath('//td/a[@class="c2"]')
@@ -23,9 +23,9 @@ def processing_index(proxy):
     return result
 
 
-def processing_detail(url, proxy):
+def processing_detail(url):
     result = []
-    r = requests.get(url, proxies=proxy)
+    r = requests.get(url)
     r.encoding = 'gb2312'
     if r.text:
         selector = etree.HTML(r.text)

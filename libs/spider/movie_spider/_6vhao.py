@@ -26,9 +26,9 @@ def processing_index(soup):
     return result
 
 
-def processing_detail(url, proxy):
+def processing_detail(url):
     result = []
-    r = requests.get(url, proxies=proxy)
+    r = requests.get(url)
     r.encoding = 'utf-8'
     soup = BeautifulSoup(r.text, "html.parser")
     # 去html标签

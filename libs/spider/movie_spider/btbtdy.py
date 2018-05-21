@@ -6,9 +6,9 @@ import requests
 HOST = "http://www.btbtdy.com"
 
 
-def processing_index(proxy):
+def processing_index():
     result = []
-    r = requests.get(HOST, proxies=proxy)
+    r = requests.get(HOST)
     r.encoding = 'utf-8'
     selector = etree.HTML(r.text)
     li_list = selector.xpath('//li[@class="li"]')
@@ -24,10 +24,10 @@ def processing_index(proxy):
     return result
 
 
-def processing_detail(url, proxy):
+def processing_detail(url):
     number = (url.split('/')[5]).replace('dy', '')
     url = 'http://www.btbtdy.com/vidlist/' + number + '?timestamp=0'
-    r = requests.get(url, proxies=proxy)
+    r = requests.get(url)
     r.encoding = 'utf-8'
     soup = BeautifulSoup(r.text, "html.parser")
     result = []

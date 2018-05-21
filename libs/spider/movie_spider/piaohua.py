@@ -8,12 +8,12 @@ from lxml import etree
 HOST = "https://www.piaohua.com"
 
 
-def processing_index(proxy):
+def processing_index():
     result = []
     error_times = 0
     while True:
         try:
-            r = requests.get(HOST, proxies=proxy)
+            r = requests.get(HOST)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, "html.parser")
             a_list = soup.find_all('a')
@@ -34,11 +34,11 @@ def processing_index(proxy):
     return result
 
 
-def processing_detail(url, proxy):
+def processing_detail(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
     }
-    r = requests.get(url, proxies=proxy, headers=headers)
+    r = requests.get(url, headers=headers)
     r.encoding = 'utf-8'
     soup = BeautifulSoup(r.text, "html.parser")
     result = []

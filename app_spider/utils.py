@@ -17,28 +17,20 @@ from libs.spider.proxies import xicidaili
 
 def get_resource_urls():
     # 1.获取代理
-    proxies = xicidaili.processing('nn')
     # 2.爬取几大电影网站首页，把首页URL加入待爬取列表中
     urls = ['btbtdy.com', 'dygang.com', 'dy2018.com', 'piaohua.com', ]
     count = 1
     for url in urls:
         items = []
-        tmp = random.sample(proxies, 1)[0]
-        proxy = {
-            "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
-        }
-        print(url)
         try:
             if "dygang" in url:
-                items = dygang.processing_index(proxy)
+                items = dygang.processing_index()
             elif "dy2018" in url:
-                items = dy2018.processing_index(proxy)
+                items = dy2018.processing_index()
             elif "piaohua" in url:
-                items = piaohua.processing_index(proxy)
-            elif "6vhao" in url:
-                items = _6vhao.processing_index(proxy)
+                items = piaohua.processing_index()
             elif "btbtdy" in url:
-                items = btbtdy.processing_index(proxy)
+                items = btbtdy.processing_index()
             else:
                 return HttpResponse('没有可以处理的方法', content_type="application/json", status=400)
         except Exception as e:
@@ -57,8 +49,6 @@ def get_resource_urls():
 
 
 def get_resources():
-    # 1.获取代理
-    proxies = xicidaili.processing('nn')
     # 2.从待爬取数据库中获得待爬取链接。
     now = datetime.datetime.now()
     start = now - datetime.timedelta(hours=23, minutes=59, seconds=59)
@@ -69,24 +59,19 @@ def get_resources():
     # urs = urs_set.filter(spider_times=spider_times['spider_times__min'])
     # 3.爬取信息，存放数据库
     for ur in urs:
-        # 代理
-        tmp = random.sample(proxies, 1)[0]
-        proxy = {
-            "%s" % tmp['type']: "%s://%s:%s" % (tmp['type'], tmp['ip'], tmp['port'])
-        }
         # 分析
         result = []
         try:
             if "dygang" in ur.source:
-                result = dygang.processing_detail(ur.href, proxy)
+                result = dygang.processing_detail(ur.href)
             elif "dy2018" in ur.source:
-                result = dy2018.processing_detail(ur.href, proxy)
+                result = dy2018.processing_detail(ur.href)
             elif "6vhao" in ur.source:
-                result = _6vhao.processing_detail(ur.href, proxy)
+                result = _6vhao.processing_detail(ur.href)
             elif "btbtdy" in ur.source:
-                result = btbtdy.processing_detail(ur.href, proxy)
+                result = btbtdy.processing_detail(ur.href)
             elif "piaohua" in ur.source:
-                result = piaohua.processing_detail(ur.href, proxy)
+                result = piaohua.processing_detail(ur.href)
         except Exception as e:
             ur.error_times += 1
             pass
