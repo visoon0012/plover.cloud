@@ -51,8 +51,9 @@ def get_resource_urls():
 def get_resources():
     # 2.从待爬取数据库中获得待爬取链接。
     now = datetime.datetime.now()
-    start = now - datetime.timedelta(hours=23, minutes=59, seconds=59)
-    # 搜索 错误次数小于10次 且 最后更新时间在两天前的电影
+    # start = now - datetime.timedelta(hours=23, minutes=59, seconds=59)
+    start = now - datetime.timedelta(hours=24*30)
+    # 搜索 错误次数小于10次 且 最后更新时间在30天前的电影
     urs = UrlResource.objects.filter(error_times__lte=10, updated_time__lte=start)
     # 搜索搜索次数最少的URL
     # spider_times = urs_set.aggregate(Min('spider_times'))
