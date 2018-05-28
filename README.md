@@ -20,6 +20,14 @@
 
     uwsgi.ini
 
+    $ uwsgi --ini uwsgi.ini   # 启动uwsgi配置
+    [uwsgi-static] added mapping for /static => /home/trunk/static    # 启动成功
+
+    $ uwsgi --stop uwsgi.pid  # 关闭uwsgi
+    signal_pidfile()/kill(): Operation not permitted [core/uwsgi.c line 1659]
+
+    $ uwsgi --reload uwsgi.pid  #重新加载配置
+
 ###### 4.  启动应用 - 需要在虚拟环境下 - 需要运行权限
 
     chmod +x start_server
