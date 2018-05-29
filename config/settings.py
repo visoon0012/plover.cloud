@@ -93,6 +93,7 @@ CRONJOBS = [
     # ('0 */4 * * *', 'app_book.spiders.auto_update_fork', '>>/root/plover.cloud/logs/auto_update_fork.log'),
     # ('0 4 * * *', 'app_book.spiders.auto_download', '>>/root/plover.cloud/logs/auto_download.log'),
 ]
+
 # END 定时任务
 
 #  JWT设置
