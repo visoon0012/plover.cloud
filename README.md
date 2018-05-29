@@ -82,7 +82,8 @@
         activate plover
     ######9. 收集静态数据
         python manage.py collectstatic
-
+    ######
+        python manage.py dumpdata --all > tmp.json
     
 ######10. 重启影梭
     #!/bin/sh
