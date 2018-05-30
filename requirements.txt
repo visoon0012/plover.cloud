@@ -42,3 +42,4 @@ wincertstore==0.2
 gevent
 gunicorn
 circus
+psycopg2
