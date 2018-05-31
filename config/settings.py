@@ -36,8 +36,6 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'corsheaders',
     'django_crontab',
-    'werkzeug_debugger_runserver',
-    'django_extensions',
     # 自己的APP
     'app_movie',
     'app_spider',
