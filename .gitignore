@@ -2,7 +2,7 @@
 *.pyc
 local_settings.py
 .idea/
-migrations/
+00*
 /config/datebases.py
 media/movie_images
 fabfile.py
