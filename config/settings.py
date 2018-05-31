@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'corsheaders',
     'django_crontab',
+    'werkzeug_debugger_runserver',
+    'django_extensions',
     # 自己的APP
     'app_movie',
     'app_spider',
@@ -84,6 +86,9 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:4200',
 )
 # end 跨域
+
+# HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # 定时任务
 CRONJOBS = [

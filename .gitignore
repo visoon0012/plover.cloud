@@ -7,3 +7,5 @@ local_settings.py
 media/movie_images
 fabfile.py
 config/databases.py
+database
+plover

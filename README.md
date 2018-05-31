@@ -12,6 +12,8 @@
 
     source /root/python_env/python3/bin/activate
 
+    python manage.py runserver_plus --cert-file full_chain.pem 0.0.0.0:8000
+
 ###### 2.  退出环境
 
     deactivate
@@ -83,7 +85,29 @@
     ######9. 收集静态数据
         python manage.py collectstatic
     ######
-        python manage.py dumpdata --all > tmp.json
+        python manage.py dumpdata app_blog > database/app_blog.json
+        python manage.py dumpdata app_book > database/app_book.json
+        python manage.py dumpdata app_image > database/app_image.json
+        python manage.py dumpdata app_message > database/app_message.json
+        python manage.py dumpdata app_movie > database/app_movie.json
+        python manage.py dumpdata app_poem > database/app_poem.json
+        python manage.py dumpdata app_spider > database/app_spider.json
+        python manage.py dumpdata app_system > database/app_system.json
+        python manage.py dumpdata app_user > database/app_user.json
+        python manage.py dumpdata app_wallet > database/app_wallet.json
+        python manage.py dumpdata app_wechat > database/app_wechat.json
+
+        python manage.py loaddata database/app_blog.json
+        python manage.py loaddata database/app_book.json
+        python manage.py loaddata database/app_image.json
+        python manage.py loaddata database/app_message.json
+        python manage.py loaddata database/app_movie.json
+        python manage.py loaddata database/app_poem.json
+        python manage.py loaddata database/app_spider.json
+        python manage.py loaddata database/app_system.json
+        python manage.py loaddata database/app_user.json
+        python manage.py loaddata database/app_wallet.json
+        python manage.py loaddata database/app_wechat.json
     
 ######10. 重启影梭
     #!/bin/sh
