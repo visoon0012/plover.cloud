@@ -16,3 +16,4 @@ pypinyin==0.30.0
 requests==2.18.4
 simplejson==3.14.0
 wechatpy==1.6.1
+rest_framework_swagger
