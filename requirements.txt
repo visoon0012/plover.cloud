@@ -10,8 +10,6 @@ jieba==0.39
 Jinja2==2.10
 lxml==4.2.1
 Markdown==2.6.11
-numpy==1.14.2
-pandas==0.22.0
 Pillow==5.1.0
 PyJWT==1.6.1
 pypinyin==0.30.0
