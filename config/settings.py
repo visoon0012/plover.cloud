@@ -87,9 +87,6 @@ CORS_ORIGIN_WHITELIST = (
 )
 # end 跨域
 
-# HTTPS
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 # 定时任务
 CRONJOBS = [
     ('0 1 * * *', 'app_spider.utils.get_resource_urls', '>>/root/plover.cloud/logs/spider_resource.log'),
