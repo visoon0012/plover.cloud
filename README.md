@@ -12,6 +12,8 @@
 
     source /root/python_env/python3/bin/activate
 
+    python manage.py runserver_plus --cert-file full_chain.crt --key-file full_chain.key 0.0.0.0:8000
+
     python manage.py runserver_plus --cert-file full_chain.pem 0.0.0.0:8000
 
 ###### 2.  退出环境
