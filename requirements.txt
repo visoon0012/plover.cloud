@@ -46,3 +46,4 @@ uritemplate==3.0.0
 urllib3==1.22
 wincertstore==0.2
 wrapt==1.10.11
+psycopg2-binary
