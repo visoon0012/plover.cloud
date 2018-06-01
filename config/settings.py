@@ -217,7 +217,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'D:/monitor.log',
+            'filename': 'monitor.log',
             'formatter': 'verbose'
         },
         'email': {
