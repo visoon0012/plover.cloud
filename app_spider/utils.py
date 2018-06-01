@@ -1,5 +1,6 @@
 import json
 import random
+import logging
 import uuid
 from urllib import parse
 
@@ -104,3 +105,4 @@ def get_resources():
         else:
             ur.error_times = 0
         ur.save()
+        logging.info('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
