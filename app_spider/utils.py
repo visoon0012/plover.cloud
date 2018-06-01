@@ -63,6 +63,7 @@ def get_resources():
     # spider_times = urs_set.aggregate(Min('spider_times'))
     # urs = urs_set.filter(spider_times=spider_times['spider_times__min'])
     # 3.爬取信息，存放数据库
+    logger.warning(len(urs))
     for ur in urs:
         # 分析
         result = []
@@ -107,4 +108,4 @@ def get_resources():
         else:
             ur.error_times = 0
         ur.save()
-        logger.info('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
+        logger.warning('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
