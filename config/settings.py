@@ -217,7 +217,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'monitor.log',
+            'filename': 'plover.log',
             'formatter': 'verbose'
         },
         'email': {
