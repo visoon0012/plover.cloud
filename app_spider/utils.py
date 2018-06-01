@@ -15,6 +15,8 @@ from app_spider.models import UrlResource
 from libs.spider.movie_spider import dygang, _6vhao, btbtdy, dy2018, piaohua
 from libs.spider.proxies import xicidaili
 
+logger = logging.getLogger(__name__)
+
 
 def get_resource_urls():
     # 1.获取代理
@@ -105,4 +107,4 @@ def get_resources():
         else:
             ur.error_times = 0
         ur.save()
-        logging.info('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
+        logger.info('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))

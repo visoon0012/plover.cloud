@@ -5,7 +5,6 @@ import sys
 from datetime import timedelta
 
 from config import databases
-import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,11 +13,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '1uslhn1%fjjz^0&v$9pk@e(i*6u7m#!y)7p=n8@&@+ds4(%q3#'
-# 日志级别
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctiome)s %(levelname)s %(module)s.%(funcName)s Line:%(lineno)d%(message)s',
-)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # DEBUG = False
