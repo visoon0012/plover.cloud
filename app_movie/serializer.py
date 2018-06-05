@@ -16,7 +16,7 @@ class DoubanMovieSimpleSerializer(serializers.ModelSerializer):
 
     def get_resources(self, obj):
         if obj.title:
-            keywords = re.split("[ !！?？.。：:()（）]", obj.title)
+            keywords = re.split("[ !！?？.。：:()（）・·]", obj.title)
             movie_resources = MovieResource.objects
             for keyword in keywords:
                 # 限制返回结果数，太多会卡
