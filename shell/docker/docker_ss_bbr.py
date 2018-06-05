@@ -4,10 +4,10 @@ from fabric.api import *
 Plover自动化运维脚本
 """
 env.hosts = [
-    'root@45.77.51.246',
+    'root@45.76.162.112',
 ]
 env.passwords = {
-    'root@45.77.51.246:22': 'cZ$73Dj*)}a3?[6M',
+    'root@45.76.162.112:22': 'k2)HZ8Fo}q2ta2WC',
 }
 """
 1、初始化
