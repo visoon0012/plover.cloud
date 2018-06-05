@@ -139,7 +139,7 @@ class MovieResourceViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, vie
         if keywords == '':
             return Response({'message': '请输入关键字'}, 400)
         # 查询是否有该标题的下载资源
-        keywords = re.split("[ !！?？.。：:()（）]", keywords)
+        keywords = re.split("[ !！?？.。：:()（）・·]", keywords)
         movie_resources = MovieResource.objects
         for keyword in keywords:
             movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
