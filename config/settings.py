@@ -94,21 +94,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'Asia/Shanghai'
-from celery.schedules import crontab
-CELERY_BEAT_SCHEDULE = {
-    # 周期性任务
-    'task-one': {
-        'task': 'app_movie.tasks.longtime_test',
-        'schedule': 5.0, # 每5秒执行一次
-        # 'args': ()
-    },
-    # 定时任务
-    # 'task-two': {
-    #     'task': 'app.tasks.print_hello',
-    #     'schedule': crontab(minute=0, hour='*/3,10-19'),
-    #     # 'args': ()
-    # }
-}
 # END 定时任务
 
 #  JWT设置
