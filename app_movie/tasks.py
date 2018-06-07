@@ -13,3 +13,4 @@ logger = logging.getLogger(__name__)
 @periodic_task(run_every=(timedelta(seconds=6)), ignore_result=True, )
 def test():
     logger.warning('自动任务调起')
+
