@@ -1,6 +1,10 @@
+import logging
+
 from app_movie.models import DoubanMovie, DoubanMovieSimple
 from app_movie.utils import get_movie_simple
 from libs.spider.movie_spider import douban_spider
+
+logger = logging.getLogger(__name__)
 
 
 def auto_get_movie_simple():
@@ -43,3 +47,7 @@ def auto_get_movie_detail():
     #         result = douban_spider.search_detail(douban_id)
     #         # 保存到数据库
     #         DoubanMovie.objects.create(douban_id=douban_id, json_data=result).save()
+
+
+def auto_test():
+    logger.warning('自动任务调起')

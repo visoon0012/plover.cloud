@@ -88,6 +88,7 @@ CORS_ORIGIN_WHITELIST = (
 
 # 定时任务
 CRONJOBS = [
+    ('0/1 * * * *', 'app_movie.cronjobs.auto_get_movie_simple', '>>/www/spider_movie.log'),
     ('0 11 * * *', 'app_spider.cronjobs.get_resource_urls', '>>/www/spider_resource.log'),
     ('0 12 * * *', 'app_spider.cronjobs.get_resources', '>>/www/spider_resource.log'),
     ('0 13 * * *', 'app_movie.cronjobs.auto_get_movie_simple', '>>/www/spider_movie.log'),
