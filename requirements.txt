@@ -1,3 +1,4 @@
+celery
 asn1crypto==0.24.0
 astroid==1.6.3
 beautifulsoup4==4.6.0

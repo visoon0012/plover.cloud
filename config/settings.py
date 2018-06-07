@@ -34,9 +34,9 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_swagger',
     'corsheaders',
-    'django_crontab',
     'werkzeug_debugger_runserver',
     'django_extensions',
+    'django_celery_beat',
     # 自己的APP
     'app_movie',
     'app_spider',
@@ -87,15 +87,12 @@ CORS_ORIGIN_WHITELIST = (
 # end 跨域
 
 # 定时任务
-CRONJOBS = [
-    ('*/1 * * * *', 'app_movie.cronjobs.auto_get_movie_simple', '>>/www/spider_movie.log'),
-    ('0 11 * * *', 'app_spider.cronjobs.get_resource_urls', '>>/www/spider_resource.log'),
-    ('0 12 * * *', 'app_spider.cronjobs.get_resources', '>>/www/spider_resource.log'),
-    ('0 13 * * *', 'app_movie.cronjobs.auto_get_movie_simple', '>>/www/spider_movie.log'),
-    # ('0 */4 * * *', 'app_book.spiders.auto_update_fork', '>>/root/plover.cloud/logs/auto_update_fork.log'),
-    # ('0 4 * * *', 'app_book.spiders.auto_download', '>>/root/plover.cloud/logs/auto_download.log'),
-]
-
+# Celery 设置
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'Asia/Shanghai'
 # END 定时任务
 
 #  JWT设置
