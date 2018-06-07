@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'werkzeug_debugger_runserver',
     'django_extensions',
-    'django_celery_beat',
+    # 'django_celery_beat',
     # 自己的APP
     'app_movie',
     'app_spider',
