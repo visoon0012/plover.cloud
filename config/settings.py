@@ -174,7 +174,7 @@ AUTH_USER_MODEL = 'app_user.User'
 
 LANGUAGE_CODE = 'zh-hans'
 
-USE_TZ = False
+USE_TZ = True
 
 TIME_ZONE = 'Asia/Shanghai'
 
