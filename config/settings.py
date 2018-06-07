@@ -88,12 +88,23 @@ CORS_ORIGIN_WHITELIST = (
 # end 跨域
 
 # 定时任务
-# Celery 设置
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
+# celery 异步任务队列
+CELERY_BROKER_URL = 'redis://redis:6379/0',
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_TASK_RESULT_EXPIRES = 60 * 1  # 任务过期时间，不建议直接写86400，应该让这样的magic数字表述更明显
+CELERY_IGNORE_RESULT = True  # 忽略返回
+CELERYBEAT_LOG_FILE = BASE_DIR + '/logs/%n%I.log'
+CELERY_LOG_FILE = BASE_DIR + '/logs/%n%I.log'
+CELERYD_CONCURRENCY = 3  # celery worker的
+CELERYD_LOG_LEVEL = "ERROR"
+CELERYD_OPTS = "--time-limit=300 --concurrency=8"
+# 并发数 也是命令行-c指定的数目,事实上实践发现并不是worker也多越好,保证任务不堆积,加上一定新增任务的预留就可以
+CELERYD_MAX_TASKS_PER_CHILD = 40  # 每个worker执行了多少任务就会死掉，我建议数量可以大一些，比如200
+BROKER_POOL_LIMIT = 10  # 默认celery与broker连接池连接数
 # END 定时任务
 
 #  JWT设置
