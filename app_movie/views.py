@@ -35,10 +35,10 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
     def status(self, request):
         return Response({'status': True, 'status2': True})
 
-    @action(methods=['GET'], detail=False)
-    def auto(self, request):
-        utils.auto_get_movie_detail()
-        return Response({'message': 'ok'})
+    # @action(methods=['GET'], detail=False)
+    # def auto(self, request):
+    #     utils.auto_get_movie_detail()
+    #     return Response({'message': 'ok'})
 
     @action(methods=['GET'], detail=False)
     def spider(self, request):
@@ -104,7 +104,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             douban_movie = DoubanMovie.objects.get(douban_id=douban_id)
             # 如果信息太旧了，同步最新的信息回来
             if douban_movie.updated_time < timezone.now() - datetime.timedelta(days=30):
-                print('影片信息过旧')
+                # print('影片信息过旧')
                 result = douban_spider.search_detail(douban_id)
                 douban_movie.json_data = result
                 douban_movie.save()
@@ -113,7 +113,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             douban_movie.show_times += 1
             douban_movie.save()
         except ObjectDoesNotExist as e:
-            print('新豆瓣影片信息')
+            # print('新豆瓣影片信息')
             # 不存在该资源，到豆瓣查询
             result = douban_spider.search_detail(douban_id)
             # 保存到数据库

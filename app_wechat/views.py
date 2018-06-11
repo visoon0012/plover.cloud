@@ -1,10 +1,15 @@
+import json
+
+import requests
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
 from rest_framework.response import Response
 from wechatpy import parse_message, create_reply
 from wechatpy.exceptions import InvalidSignatureException
 from wechatpy.utils import check_signature
 
+from app_user.models import User
 from app_wechat.utils import handle_message
 
 WECHAT_TOKEN = 'plovercloud'
@@ -38,3 +43,26 @@ def wechat(request):
         return response
     else:
         print('不存在的方法')
+
+
+@csrf_exempt
+def wechat_openid(request):
+    """获取小程序openid并注册系统"""
+    appid = 'wxfa64d5c4005bd355'
+    secret = 'a1719c25d2b003192a5fe20e61339a1f'
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        if 'code' not in data:
+            return Response('参数错误', status=status.HTTP_400_BAD_REQUEST)
+        # 通过 code 获取 openid
+        url = 'https://api.weixin.qq.com/sns/jscode2session?appid={}&secret={}&js_code={}&grant_type=authorization_code'.format(appid, secret, data['code'])
+        r = requests.get(url)
+        openid = json.loads(r.text)['openid']
+        # 获取或者创建用户
+        user, created = User.objects.get_or_create(username='WX{}'.format(openid), wechat_openid=openid)
+        if created:
+            user.set_password(openid)
+        else:
+            user.nickname = data['user']['nickName']
+        user.save()
+        return HttpResponse(openid)
