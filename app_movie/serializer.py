@@ -58,3 +58,13 @@ class UserMovieSimpleMarkSerializer(serializers.ModelSerializer):
         else:
             serializer = UserSimpleSerializer(obj['user'])
         return serializer.data
+
+class UserMovieSimpleMarkDetailSerializer(serializers.ModelSerializer):
+    movie_simple_detail = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserMovieSimpleMark
+        fields = '__all__'
+
+    def get_movie_simple_detail(self, obj):
+        return DoubanMovieSimpleSerializer(obj.movie_simple).data

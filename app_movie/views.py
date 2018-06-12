@@ -17,7 +17,8 @@ from rest_framework_jwt import authentication
 
 from app_movie import utils
 from app_movie.models import DoubanMovieSimple, DoubanMovie, MovieResource, MovieImage, UserMovieSimpleMark
-from app_movie.serializer import DoubanMovieSimpleSerializer, DoubanMovieSerializer, MovieResourceSerializer, UserMovieSimpleMarkSerializer
+from app_movie.serializer import DoubanMovieSimpleSerializer, DoubanMovieSerializer, MovieResourceSerializer, UserMovieSimpleMarkSerializer, \
+    UserMovieSimpleMarkDetailSerializer
 from libs.permissions import IsReadOnlyOrAdmin, IsOwnerOrReadOnly
 from libs.spider.movie_spider import douban_spider
 
@@ -195,3 +196,8 @@ class UserMovieSimpleMarkViewset(mixins.CreateModelMixin, mixins.UpdateModelMixi
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+    def list(self, request, *args, **kwargs):
+        self.serializer_class = UserMovieSimpleMarkDetailSerializer
+        return super(UserMovieSimpleMarkViewset, self).list(request, *args, **kwargs)
