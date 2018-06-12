@@ -176,7 +176,7 @@ class UserMovieSimpleMarkViewset(mixins.CreateModelMixin, mixins.UpdateModelMixi
     queryset = UserMovieSimpleMark.objects.get_queryset().order_by('-id')
     serializer_class = UserMovieSimpleMarkSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('user__id', 'movie_simple__douban_id',)
+    filter_fields = ('user__id', 'movie_simple__douban_id','movie_simple__id',)
 
     def create(self, request, *args, **kwargs):
         if request.user.is_anonymous:

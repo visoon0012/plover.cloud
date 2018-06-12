@@ -63,6 +63,7 @@ def wechat_openid(request):
         if created:
             user.set_password(openid)
         else:
-            user.nickname = data['user']['nickName']
+            if 'user' in data and 'nickName' in data['user']['nickName']:
+                user.nickname = data['user']['nickName']
         user.save()
         return HttpResponse(openid)

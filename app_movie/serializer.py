@@ -50,7 +50,7 @@ class UserMovieSimpleMarkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserMovieSimpleMark
-        fields = ('id', 'user', 'user_obj', 'movie_simple', 'is_fork', 'is_watched', 'is_like', 'comment', 'created_time', 'updated_time')
+        fields = '__all__'
 
     def get_user_obj(self, obj):
         if isinstance(obj, UserMovieSimpleMark):
