@@ -21,6 +21,11 @@ class DoubanMovieSimpleSerializer(serializers.ModelSerializer):
             for keyword in keywords:
                 # 限制返回结果数，太多会卡
                 movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+            if obj.douban_type == 'movie':
+                movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
+                movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
             serializer = MovieResourceSerializer(movie_resources, many=True)
             return serializer.data
         else:
@@ -58,6 +63,7 @@ class UserMovieSimpleMarkSerializer(serializers.ModelSerializer):
         else:
             serializer = UserSimpleSerializer(obj['user'])
         return serializer.data
+
 
 class UserMovieSimpleMarkDetailSerializer(serializers.ModelSerializer):
     movie_simple_detail = serializers.SerializerMethodField()
