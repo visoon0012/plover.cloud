@@ -96,4 +96,6 @@ if __name__ == '__main__':
     #                 # 表示是自己的钱包
     #                 print(out['value'])
     # processing_index(None)
-    processing_detail('https://www.piaohua.com/html/lianxuju/2017/1218/32721.html', None)
+    resp = requests.get('http://wenshu.court.gov.cn')
+    print(resp)
+    # processing_detail('https://www.piaohua.com/html/lianxuju/2017/1218/32721.html', None)

@@ -110,3 +110,4 @@ def get_resources():
             ur.error_times = 0
         ur.save()
         logger.warning('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
+

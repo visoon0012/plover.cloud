@@ -133,7 +133,7 @@ class MovieResourceViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, vie
     filter_fields = ('id', 'title', 'name', 'source',)
     search_fields = ('title', 'name', 'source', 'download_link')
 
-    @list_route()
+    @action(detail=False, methods=['GET'], url_name='search', url_path='search')
     def search(self, request):
         result = []
         keywords = request.GET.get('keywords', '')
@@ -154,6 +154,22 @@ class MovieResourceViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, vie
                 tmp_list.append(serializer)
             result.append(tmp_list)
         return Response(result)
+
+    @action(detail=False)
+    def search_list(self, request):
+        keywords = request.GET.get('keywords', '')
+        douban_type = request.GET.get('douban_type', 'movie')
+        keywords = re.split("[ !！?？.。：:()（）・·]", keywords)
+        movie_resources = MovieResource.objects.order_by('-id')
+        for keyword in keywords:
+            movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+        if douban_type == 'movie':
+            movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
+            movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
+            movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
+            movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
+        serializer = MovieResourceSerializer(movie_resources, many=True)
+        return Response(serializer.data)
 
     # @action(detail=False)
     # def search2(self, request):
