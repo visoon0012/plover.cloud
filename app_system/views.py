@@ -37,36 +37,36 @@ class UserSSConfigViewset(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mi
         serializer = UserSSConfigSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    @detail_route(methods=['GET'])
-    def config(self, request, *args, **kwargs):
-        """
-        配置服务器
-        """
-        instance = self.get_object()
-        serializer = UserSSConfigCreateSerializer(instance)
-        utils.config_ss(**serializer.data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @detail_route(methods=['GET'])
-    def restart(self, request, *args, **kwargs):
-        """
-        重启SS，传入UserSSConfig.id
-        """
-        instance = self.get_object()
-        serializer = UserSSConfigCreateSerializer(instance)
-        try:
-            utils.reboot_ss(**serializer.data)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': '重启尚未完成，请稍后重试'}, status=status.HTTP_400_BAD_REQUEST)
-
-    @list_route(methods=['GET'])
-    def user_servers(self, request, *args, **kwargs):
-        """
-        某个用户的SS服务器
-        """
-        if request.user.is_anonymous:
-            return Response({'error': '请先登录'}, status=status.HTTP_401_UNAUTHORIZED)
-        queryset = UserSSConfig.objects.filter(user=request.user).order_by('-id')
-        serializer = UserSSConfigModelSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # @detail_route(methods=['GET'])
+    # def config(self, request, *args, **kwargs):
+    #     """
+    #     配置服务器
+    #     """
+    #     instance = self.get_object()
+    #     serializer = UserSSConfigCreateSerializer(instance)
+    #     utils.config_ss(**serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    #
+    # @detail_route(methods=['GET'])
+    # def restart(self, request, *args, **kwargs):
+    #     """
+    #     重启SS，传入UserSSConfig.id
+    #     """
+    #     instance = self.get_object()
+    #     serializer = UserSSConfigCreateSerializer(instance)
+    #     try:
+    #         utils.reboot_ss(**serializer.data)
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     except Exception as e:
+    #         return Response({'error': '重启尚未完成，请稍后重试'}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # @list_route(methods=['GET'])
+    # def user_servers(self, request, *args, **kwargs):
+    #     """
+    #     某个用户的SS服务器
+    #     """
+    #     if request.user.is_anonymous:
+    #         return Response({'error': '请先登录'}, status=status.HTTP_401_UNAUTHORIZED)
+    #     queryset = UserSSConfig.objects.filter(user=request.user).order_by('-id')
+    #     serializer = UserSSConfigModelSerializer(queryset, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
