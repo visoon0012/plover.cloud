@@ -21,6 +21,6 @@ app = Celery('config')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
-app.conf.CELERYD_CONCURRENCY = 3  # 任务并发数
-app.conf.CELERYD_TASK_SOFT_TIME_LIMIT = 15  # 任务超时时间
+app.conf.CELERYD_CONCURRENCY = 2  # 任务并发数
+app.conf.CELERYD_TASK_SOFT_TIME_LIMIT = 30  # 任务超时时间
 app.conf.CELERY_DISABLE_RATE_LIMITS = True  # 任务频率限制开关
