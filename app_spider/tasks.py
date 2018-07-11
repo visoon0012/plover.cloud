@@ -20,7 +20,7 @@ def auto_get_resource_urls():
     logger.warning('定时任务：资源列表搜索')
     get_resource_urls()
 
-
+# @periodic_task(run_every=(timedelta(hours=12)), ignore_result=True, )
 @periodic_task(run_every=(crontab(minute='30', hour='2')), ignore_result=True, )
 def auto_get_resources():
     logger.warning('定时任务：资源搜索')
