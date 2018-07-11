@@ -36,10 +36,30 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
     def status(self, request):
         return Response({'status': True, 'status2': True})
 
-    # @action(methods=['GET'], detail=False)
-    # def auto(self, request):
-    #     utils.auto_get_movie_detail()
-    #     return Response({'message': 'ok'})
+    @action(methods=['GET'], detail=False)
+    def auto_resources(self, request):
+        """
+        循环计算每个资源数，统计 todo
+        :param request:
+        :return:
+        """
+        print('总条数：{}'.format(self.queryset.count()))
+        count = 1
+        for obj in self.queryset:
+            print('当前条数：{}'.format(count))
+            count += 1
+            keywords = re.split("[ !！?？.。：:()（）・·]", obj.title)
+            movie_resources = MovieResource.objects.values('id')
+            for keyword in keywords:
+                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+            if obj.douban_type == 'movie':
+                movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
+                movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
+            obj.resources = movie_resources.count()
+            obj.save()
+        return Response({'message': 'ok'})
 
     @action(methods=['GET'], detail=False)
     def spider(self, request):

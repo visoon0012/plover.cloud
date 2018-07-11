@@ -20,6 +20,8 @@ class DoubanMovieSimple(models.Model):
     douban_type = models.CharField(max_length=190, blank=True, null=True)  # 豆瓣类型
     level = models.IntegerField(default=0)  # 等级高度，越高排名越前
 
+    resources = models.IntegerField(default=0)  # 资源数
+
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
 

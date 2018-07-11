@@ -8,27 +8,9 @@ from app_user.serializer import UserSimpleSerializer
 
 
 class DoubanMovieSimpleSerializer(serializers.ModelSerializer):
-    resources = serializers.SerializerMethodField()
-
     class Meta:
         model = DoubanMovieSimple
         fields = ('id', 'douban_id', 'title', 'cover', 'cover_x', 'cover_y', 'is_new', 'rate', 'url', 'douban_tag', 'douban_type', 'level', 'resources')
-
-    def get_resources(self, obj):
-        if obj.title:
-            keywords = re.split("[ !！?？.。：:()（）・·]", obj.title)
-            movie_resources = MovieResource.objects.values('id')
-            for keyword in keywords:
-                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
-            if obj.douban_type == 'movie':
-                movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
-                movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
-                movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
-                movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(obj.title))
-            serializer = movie_resources.count()
-            return serializer
-        else:
-            return None
 
 
 class DoubanMovieSerializer(serializers.ModelSerializer):

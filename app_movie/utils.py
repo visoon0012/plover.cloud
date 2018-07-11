@@ -39,11 +39,21 @@ def get_movie_simple(m_type, m_tag):
             movie_simple.is_new = movie['is_new']
             movie_simple.url = movie['url']
             movie_simple.level = level
+            # 资源数计算
+            keywords = re.split("[ !！?？.。：:()（）・·]", movie['title'])
+            movie_resources = MovieResource.objects.values('id')
+            for keyword in keywords:
+                movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
+            if movie_simple.douban_type == 'movie':
+                movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(movie['title']))
+                movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
+                movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(movie['title']))
+            movie_simple.resources = movie_resources.count()
             movie_simple.save()
         return Response({'message': 'ok'})
     else:
         return Response({'message': 'none data'}, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 def search_resources(keyword):

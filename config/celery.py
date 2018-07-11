@@ -24,3 +24,5 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.CELERYD_CONCURRENCY = 2  # 任务并发数
 app.conf.CELERYD_TASK_SOFT_TIME_LIMIT = 30  # 任务超时时间
 app.conf.CELERY_DISABLE_RATE_LIMITS = True  # 任务频率限制开关
+app.conf.enable_utc = False
+app.conf.timezone = "Asia/Shanghai"
