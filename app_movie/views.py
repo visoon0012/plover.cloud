@@ -1,16 +1,16 @@
 import datetime
 import json
 import re
-from django.utils import timezone
 from io import BytesIO
 
 import requests
 from PIL import Image
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Count
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, mixins, status
-from rest_framework.decorators import list_route, action
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
@@ -43,10 +43,8 @@ class MovieSimpleViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, views
         :param request:
         :return:
         """
-        print('总条数：{}'.format(self.queryset.count()))
         count = 1
         for obj in self.queryset:
-            print('当前条数：{}'.format(count))
             count += 1
             keywords = re.split("[ !！?？.。：:()（）・·]", obj.title)
             movie_resources = MovieResource.objects.values('id')
@@ -107,6 +105,31 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     authentication_classes = (authentication.JSONWebTokenAuthentication,)
     queryset = DoubanMovie.objects.get_queryset().order_by('id')
     serializer_class = DoubanMovieSerializer
+
+    # @action(detail=False, methods=['GET'])
+    # def word2vec(self, request):
+    #     """
+    #     电影详情 - 词向量
+    #     :param request:
+    #     :return:
+    #     """
+    #     doc2vector.doc_segment()
+    #     doc2vector.train()
+    #     return Response({}, status=status.HTTP_200_OK)
+    #
+    # @action(detail=False, methods=['GET'])
+    # def similar(self, request):
+    #     """
+    #     相似程度
+    #     :param request:
+    #     :return:
+    #     """
+    #     douban_id_1 = request.GET.get('douban_id_1', '26721664')
+    #     douban_id_2 = request.GET.get('douban_id_2', '26721664')
+    #     movie_info_1 = json.loads(self.queryset.get(douban_id=douban_id_1).json_data)['title']
+    #     movie_info_2 = json.loads(self.queryset.get(douban_id=douban_id_2).json_data)['title']
+    #     doc2vector.test_model(movie_info_1, movie_info_2)
+    #     return Response({}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['GET'], url_name='detail', url_path='detail')
     def movie_detail(self, request):

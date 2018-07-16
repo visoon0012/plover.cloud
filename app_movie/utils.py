@@ -18,10 +18,9 @@ def get_movie_simple(m_type, m_tag):
         DoubanMovieSimple.objects.filter(douban_tag=m_tag, douban_type=m_type).update(level=0)
         # 循环更新
         movies = json.loads(result)['subjects']
-        movies.reverse()
-        level = 0
+        level = len(movies)
         for movie in movies:
-            level += 1
+            level -= 1
             movie_simple, created = DoubanMovieSimple.objects.get_or_create(
                 douban_id=movie['id'],
                 douban_tag=m_tag,

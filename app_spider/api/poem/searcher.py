@@ -11,7 +11,7 @@ from libs.spider.poem_spider import gushiwen
 
 @csrf_exempt
 def processing_detail(request):
-    base_url = 'http://so.gushiwen.org/view_%s.aspx'
+    base_url = 'https://www.gushiwen.org/shiwen/default.aspx?page=%s&type=0&id=0'
     id = 0
     poem = Poem.objects.order_by('-get_id').first()
     id = poem.get_id

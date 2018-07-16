@@ -87,3 +87,4 @@ class UserMovieSimpleMark(models.Model):
 
     def __str__(self):
         return '%s关于%s的评论' % (self.user.username, self.movie_simple.title)
+
