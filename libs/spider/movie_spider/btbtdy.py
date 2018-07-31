@@ -16,7 +16,7 @@ def processing_index():
         div_list = li.xpath('div')
         if 'name' in div_list[0].xpath('@class'):
             data = {
-                'href': "http://www.btbtdy.com/" + div_list[0].xpath('a/@href')[0],
+                'href': "http://www.btbtdy.net/" + div_list[0].xpath('a/@href')[0],
                 'title': div_list[0].xpath('a/@title')[0],
                 'source_type': div_list[4].text,
             }
@@ -26,7 +26,7 @@ def processing_index():
 
 def processing_detail(url):
     number = (url.split('/')[5]).replace('dy', '')
-    url = 'http://www.btbtdy.com/vidlist/' + number + '?timestamp=0'
+    url = 'http://www.btbtdy.net/vidlist/' + number + '?timestamp=0'
     r = requests.get(url)
     r.encoding = 'utf-8'
     soup = BeautifulSoup(r.text, "html.parser")
@@ -44,4 +44,4 @@ def processing_detail(url):
 
 
 if __name__ == '__main__':
-    processing_detail('http://www.btbtdy.com//btdy/dy12231.html', None)
+    print(processing_detail('http://www.btbtdy.net//btdy/dy13279.html'))

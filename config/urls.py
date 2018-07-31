@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+import app_community
+import app_movie
 from app_book.views import NovelViewset, NovelChapterViewset, NovelForkViewset
 from app_message.views import SystemMessageViewset, UserMessageViewset
 from app_movie.views import MovieSimpleViewset, MovieResourceViewset, MovieViewset, UserMovieSimpleMarkViewset
@@ -29,6 +31,8 @@ from config.settings import STATIC_ROOT, MEDIA_ROOT
 from rest_framework import routers
 from app_poem.views import PoemViewset
 from config.swagger_schema import SwaggerSchemaView
+from app_community.urls import router as app_community_router
+from app_movie.urls import router as app_movie_router
 
 router = routers.DefaultRouter()
 
@@ -55,6 +59,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
     url(r'^api/spider/', include('app_spider.urls_api')),
+    url(r'^api/v2/movie/', include(app_movie_router.urls)),
+    url(r'^api/advert/', include(app_community_router.urls)),
+
     # JWT Auth
     url(r'^api/token/auth/', obtain_jwt_token),
     url(r'^api/token/refresh/', refresh_jwt_token),

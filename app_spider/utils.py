@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def get_resource_urls():
     # 1.获取代理
     # 2.爬取几大电影网站首页，把首页URL加入待爬取列表中
-    urls = ['btbtdy.com', 'dygang.com', 'dy2018.com', 'piaohua.com', ]
+    urls = ['btbtdy.net', 'dygang.com', 'dy2018.com', 'piaohua.com', ]
     count = 1
     for url in urls:
         items = []
@@ -110,4 +110,3 @@ def get_resources():
             ur.error_times = 0
         ur.save()
         logger.warning('处理：%s，数据：%s，新增：%s' % (ur.href, len(result), new_count))
-
