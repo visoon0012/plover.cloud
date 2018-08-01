@@ -206,11 +206,11 @@ class MovieResourceViewset(mixins.RetrieveModelMixin, mixins.ListModelMixin, vie
         movie_resources = MovieResource.objects.order_by('-id')
         for keyword in keywords:
             movie_resources = movie_resources.filter(Q(name__icontains=keyword) | Q(title__icontains=keyword))
-        if douban_type == 'movie':
-            movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
-            movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
-            movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
-            movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
+        # if douban_type == 'movie':
+        #     movie_resources = movie_resources.exclude(name__iregex='连载至[0-9]+')
+        #     movie_resources = movie_resources.exclude(name__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
+        #     movie_resources = movie_resources.exclude(title__iregex='连载至[0-9]+')
+        #     movie_resources = movie_resources.exclude(title__iregex='[\u4e00-\u9fa5]*{}[0-9]+'.format(keywords))
         serializer = MovieResourceSerializer(movie_resources, many=True)
         return Response(serializer.data)
 
