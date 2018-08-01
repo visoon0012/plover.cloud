@@ -29,7 +29,7 @@ def search_detail(movie_id):
     return response.text
 
 
-def search_detail_proxy(movie_id):
+def search_detail_douban(movie_id):
     url = 'https://api.douban.com/v2/movie/subject/%s' % str(movie_id)
     return get_soup(url)
 

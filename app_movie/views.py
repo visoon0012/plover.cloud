@@ -149,7 +149,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
             # 如果信息太旧了，同步最新的信息回来
             if douban_movie.updated_time < timezone.now() - datetime.timedelta(days=30):
                 # print('影片信息过旧')
-                result = douban_spider.search_detail(douban_id)
+                result = douban_spider.search_detail_douban(douban_id)
                 douban_movie.json_data = result
                 douban_movie.save()
             # 更新字段的显示次数
@@ -159,7 +159,7 @@ class MovieViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
         except ObjectDoesNotExist as e:
             # print('新豆瓣影片信息')
             # 不存在该资源，到豆瓣查询
-            result = douban_spider.search_detail(douban_id)
+            result = douban_spider.search_detail_douban(douban_id)
             # 保存到数据库
             DoubanMovie.objects.create(douban_id=douban_id, json_data=result).save()
             # 返回结果
