@@ -1,23 +1,22 @@
 from bs4 import BeautifulSoup
-from lxml import etree
 
 import requests
 
-HOST = "http://www.btbtdy.com"
+HOST = "http://www.btbtdy.net"
 
 
 def processing_index():
     result = []
-    r = requests.get(HOST)
+    r = requests.get('http://www.btbtdy.net/new/')
     r.encoding = 'utf-8'
-    selector = etree.HTML(r.text)
-    li_list = selector.xpath('//li[@class="li"]')
+    soup = BeautifulSoup(r.text, "html.parser")
+    li_list = soup.find_all('li', class_="li")
     for li in li_list:
-        div_list = li.xpath('div')
-        if 'name' in div_list[0].xpath('@class'):
+        div_list = li.find_all('div')
+        if 'name' in div_list[0]['class']:
             data = {
-                'href': "http://www.btbtdy.net/" + div_list[0].xpath('a/@href')[0],
-                'title': div_list[0].xpath('a/@title')[0],
+                'href': "http://www.btbtdy.net/" + div_list[0].a['href'],
+                'title': div_list[0].a.text,
                 'source_type': div_list[4].text,
             }
             result.append(data)
@@ -44,4 +43,5 @@ def processing_detail(url):
 
 
 if __name__ == '__main__':
-    print(processing_detail('http://www.btbtdy.net//btdy/dy13279.html'))
+    print(processing_index())
+    # print(processing_detail('http://www.btbtdy.net//btdy/dy13279.html'))
