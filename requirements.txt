@@ -22,7 +22,7 @@ django-rest-swagger==2.1.2
 django-werkzeug-debugger-runserver==0.3.1
 djangorestframework==3.8.2
 djangorestframework-jwt==1.11.0
-ecdsa==0.13
+ecdsa==0.13.3
 et-xmlfile==1.0.1
 Fabric3==1.14.post1
 greenlet==0.4.13
