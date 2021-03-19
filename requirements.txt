@@ -20,7 +20,7 @@ django-extensions==2.0.7
 django-filter==1.1.0
 django-rest-swagger==2.1.2
 django-werkzeug-debugger-runserver==0.3.1
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 ecdsa==0.13
 et-xmlfile==1.0.1
