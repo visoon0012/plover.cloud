@@ -47,7 +47,7 @@ psutil==5.4.5
 psycopg2-binary==2.7.4
 pycparser==2.18
 pycrypto==2.6.1
-PyJWT==1.6.1
+PyJWT==2.4.0
 pylint==1.8.4
 pyOpenSSL==18.0.0
 pypinyin==0.30.0
